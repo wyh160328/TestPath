@@ -1,0 +1,31 @@
+/**
+ * 电子表格导出加密压缩
+ */
+var EncryptDialogUtil = jsloader.resolve("boc.EncryptDialogUtil");
+SpreadsheetReport.prototype.executeExport = function(exportType) {
+	if (!exportType) {
+		return;
+	}
+	var typeId = (exportType && typeof exportType == "string") ? exportType : (this.exportMenu ? this.exportMenu.selectedId : null);
+	if (!typeId)
+		return;
+	this.elemReportId.value = this.queryId;
+	if (this.params && this.params.length > 0) {
+		var ps = this.buildParamsInfo(true);
+		if (!ps)
+			return;
+		if (util.encode) {
+			this.elemParams.name = "paramsInfoEncode";
+			this.elemParams.value = util.coder.encode(encodeURIComponent(lang.toJSONString(ps)));
+		} else {
+			this.elemParams.value = lang.toJSONString(ps);
+		}
+	}
+	if (typeof this.currentSheetIndex != "undefined") {
+		this.elemSheetIndex.value = this.currentSheetIndex;
+	}
+	this.elemType.value = typeId;
+	this.elemClientId.value = this.clientId;
+	
+	new EncryptDialogUtil().exportEncrypt(this, typeId, 'SPREADSHEET_REPORT');
+}

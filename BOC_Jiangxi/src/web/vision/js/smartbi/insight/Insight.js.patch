@@ -1,0 +1,47 @@
+/**
+ * 透视分析导出加密压缩
+ */
+var EncryptDialogUtil = jsloader.resolve("boc.EncryptDialogUtil");
+Insight.prototype.executeExport = function (exportType, submitOptions) {
+    //util.remoteInvokeEx("MainModule", "forTest", []);
+    if (submitOptions && submitOptions.exportType) {
+        exportType = submitOptions.exportType;
+    }
+    if (!exportType || !submitOptions) {
+        return;
+    }
+    submitOptions.chartAlign = this.clientConfig.chartAlign;
+
+    // 获取表单相关元素
+    if (!this._insightExportForm) {
+        var formTemplate = domutils
+            .doGet("js/smartbi/insight/InsightForms.template");
+        var span = document.createElement("SPAN");
+        document.body.appendChild(span);
+        span.style.display = "none";
+        span.innerHTML = formTemplate;
+        this._insightExportForm = document.getElementById("_insightExportForm");
+    }
+    var exportForm = this._insightExportForm;
+    this.setExportFormInputValues(exportForm, exportType, submitOptions);
+
+    // 提交
+    if (this.exportMenu && this.exportMenu.setCloseAfterExported)
+        util.remoteInvokeEx("ClientReportService", "setCloseAfterExported", [
+            this.clientId, true]);
+    var isLowVersionChrome = false;
+    if (domutils.isChrome() && domutils.getBrowserVersion() < 35) {
+        isLowVersionChrome = true;
+    }
+    if (isLowVersionChrome) {
+        var mainObj = exportForm.target;
+        try {
+            exportForm.target = "_blank";
+            new EncryptDialogUtil().exportEncrypt(this, exportType, 'INSIGHT', submitOptions.rowCount);
+        } finally {
+            exportForm.target = mainObj;
+        }
+    } else {
+        new EncryptDialogUtil().exportEncrypt(this, exportType, 'INSIGHT', submitOptions.rowCount);
+    }
+}

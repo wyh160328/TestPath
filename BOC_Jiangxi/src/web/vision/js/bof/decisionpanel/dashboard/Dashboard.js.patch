@@ -1,0 +1,33 @@
+/**
+ * 仪表分析导出加密压缩
+ */
+var EncryptDialogUtil = jsloader.resolve("boc.EncryptDialogUtil");
+Dashboard.prototype.executeExport = function(exportType, chartDataInfo) {
+	// 检查输入参数
+	exportType = exportType || (this.exportMenu && this.exportMenu.selectedId);
+	if (!exportType)
+		return;
+	this.initExportForm();
+	var exportForm = this.__dashboardExportForm;
+	var input_exportType = domutils.findElementByClassName(exportForm, "_exportType");
+	var input_clientId = domutils.findElementByClassName(exportForm, "_clientId");
+	var input_headerHtml = domutils.findElementByClassName(exportForm, "_headerHtml");
+	var input_headerText = domutils.findElementByClassName(exportForm, "_headerText");
+	var input_tailHtml = domutils.findElementByClassName(exportForm, "_tailHtml");
+	var input_tailText = domutils.findElementByClassName(exportForm, "_tailText");
+	var input_clientWidth = domutils.findElementByClassName(exportForm, "_clientWidth");
+	var input_clientHeight = domutils.findElementByClassName(exportForm, "_clientHeight");
+
+	// 填充表单信息
+	input_exportType.value = exportType;
+	input_clientId.value = this.clientId;
+	input_headerHtml.value = this.elemVHeader && this.elemVHeader.innerHTML || "";
+	input_headerText.value = this.elemVHeader && this.elemVHeader.innerText || "";
+	input_tailHtml.value = this.elemVTail && this.elemVTail.innerHTML || "";
+	input_tailText.value = this.elemVTail && this.elemVTail.innerText || "";
+	var clientSize = this.isInPage() ? this.getClientSize() : {width: "", height: ""};
+	input_clientWidth.value = clientSize.width;
+	input_clientHeight.value = clientSize.height;
+	
+	new EncryptDialogUtil().exportEncrypt(this,exportType, 'Dashboard');
+};

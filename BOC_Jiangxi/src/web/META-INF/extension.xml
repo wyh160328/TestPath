@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE extension SYSTEM "extension.dtd">
+<extension name="BOC_Jiangxi" alias="中国银行江西省分行" desc="" priority="100" version="1.0">
+	<enable-jsp-processor>1</enable-jsp-processor>
+	<servlet>  
+		<servlet-name>ReportEncryptExportServlet</servlet-name> 
+		<servlet-class>com.boc.jx.servlet.ReportEncryptExportServlet</servlet-class> 
+		<load-on-startup>1</load-on-startup>  
+	</servlet> 
+	<servlet-mapping>  
+		<servlet-name>ReportEncryptExportServlet</servlet-name> 
+		<url-pattern>/vision/ReportEncryptExportServlet</url-pattern>  
+	</servlet-mapping>  
+</extension>

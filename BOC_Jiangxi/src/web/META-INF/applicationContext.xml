@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+    <bean id="framework" class="smartbi.framework.Framework" factory-method="getInstance">
+        <property name="modules">
+			<map>
+				<entry><key><value>JXModule</value></key><ref bean="JXModule" /></entry>
+			</map>
+        </property>
+    </bean>
+    <bean id="rmi" class="smartbi.framework.rmi.RMIModule" factory-method="getInstance">
+        <property name="modules">
+			<map>
+				<entry><key><value>JXModule</value></key><ref bean="JXModule" /></entry>
+			</map>
+        </property>
+    </bean>
+	<bean id="JXModule" class="com.boc.jx.JXModule" factory-method="getInstance"></bean>
+</beans>

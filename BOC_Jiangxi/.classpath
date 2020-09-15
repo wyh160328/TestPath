@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="src/web/META-INF/lib/zip4j_1.3.2.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/AppLibs"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DAO.Implement"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DAO.Interface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Framework.Implement"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Framework.Interface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Insight"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SmartbiCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SpreadsheetReport"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SpreadsheetReport.Implement"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SpreadsheetReport.Interface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/State.Implement"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/State.Interface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/UserManager.Implement"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/UserManager.Interface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SDK"/>
+	<classpathentry kind="output" path="src/web/META-INF/classes"/>
+</classpath>

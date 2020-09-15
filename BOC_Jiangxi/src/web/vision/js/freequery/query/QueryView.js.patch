@@ -1,0 +1,48 @@
+/**
+ * 组合分析导出加密压缩
+ */
+var EncryptDialogUtil = jsloader.resolve("boc.EncryptDialogUtil");
+QueryView.prototype.executeExport_20200615 = QueryView.prototype.executeExport;
+QueryView.prototype.executeExport = function(exportType, submitOptions) {
+	// 如果是在数据集预览界面导出Excel，resid 为空，直接走原本的导出逻辑
+	var resId = this.queryId || this.combinedQueryId|| this.dashboardId;
+	if(!resId){
+		this.executeExport_20200615(exportType, submitOptions);
+		return;
+	}
+	if (submitOptions && submitOptions.exportType) {
+		exportType = submitOptions.exportType;
+	}
+	
+	if (!exportType || !submitOptions) {
+		return;
+	}
+	submitOptions.chartAlign = this.clientConfig.chartAlign;
+	
+	// 获取表单相关元素
+	if (!this.__queryExportForm || !this.__queryExcelForm) {
+		var formTemplate = domutils.doGet("template/freequery/query/QueryViewForms.template");
+		var span = document.createElement("SPAN");
+		document.body.appendChild(span);
+		span.style.display = "none";
+		span.innerHTML = formTemplate;
+		this.__queryExportForm = document.getElementById("_queryExportForm");
+		this.__queryExcelForm = document.getElementById("_queryExcelForm");
+	}
+	var exportForm = this.__queryExportForm;
+	
+	this.setExportFormInputValues(exportForm, exportType, submitOptions);
+	// 提交
+	if (this.exportMenu && this.exportMenu.setCloseAfterExported) {
+		util.remoteInvokeEx("ClientReportService", "setCloseAfterExported", [ this.clientId, true ]);
+		var t = this;
+		setTimeout(function(){
+			t.unrender();
+			t.queryNavigator.destroy();
+			t.destroy();				
+			domutils.destroyNode(t.parent);
+		}, 100);
+	}
+	new EncryptDialogUtil().exportEncrypt(this,exportType, this.combinedQuery?"COMBINED_QUERY":"SIMPLE_REPORT", submitOptions.rowCount);
+}
+
